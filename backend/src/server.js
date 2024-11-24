@@ -8,6 +8,7 @@ dotenv.config();
 
 // Load environment variables from .env file
 const port = process.env.PORT || 3001;
+const buildDir = process.env.BUILD_DIR || path.join(process.cwd(), "build");
 
 // Base directory to store the JSON files and logs
 const baseDir = path.join(process.cwd(), "data");
@@ -35,6 +36,26 @@ function logRequest(requestDetails) {
   const timestamp = new Date().toISOString();
   const logMessage = `${timestamp} - ${requestDetails}\n`;
   fs.appendFileSync(logFile, logMessage);
+}
+
+// Helper function to serve static files
+function serveStaticFile(filePath) {
+  if (fs.existsSync(filePath)) {
+    const ext = path.extname(filePath);
+    const contentType =
+      ext === ".html"
+        ? "text/html"
+        : ext === ".js"
+        ? "application/javascript"
+        : ext === ".css"
+        ? "text/css"
+        : "application/octet-stream";
+    const content = fs.readFileSync(filePath);
+    return new Response(content, {
+      headers: { "Content-Type": contentType },
+    });
+  }
+  return null;
 }
 
 // API to save JSON by key
@@ -108,6 +129,25 @@ serve({
 
       const json = JSON.parse(fs.readFileSync(filePath, "utf-8"));
       return new Response(JSON.stringify(json), { status: 200 });
+    }
+
+    // Serve React build files
+    if (req.method === "GET") {
+      const filePath = path.join(
+        buildDir,
+        url.pathname === "/" ? "/index.html" : url.pathname
+      );
+      const staticResponse = serveStaticFile(filePath);
+
+      if (staticResponse) {
+        return staticResponse;
+      }
+
+      // If file not found, serve the React app's `index.html` (for SPA fallback)
+      return (
+        serveStaticFile(path.join(buildDir, "index.html")) ||
+        new Response("Not found", { status: 404 })
+      );
     }
 
     return new Response("Not found", { status: 404 });
