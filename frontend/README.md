@@ -1,70 +1,88 @@
-# Getting Started with Create React App
+# Performance Report Analyzer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This React application provides a user-friendly interface to analyze and monitor the performance of web pages using the Google PageSpeed Insights API. Users can input a URL to fetch and visualize performance data, including historical trends.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **URL Analysis**: Enter a URL to analyze its performance using the PageSpeed Insights API.
+- **Interactive UI**: Responsive full-width URL input similar to Google PageSpeed Insights.
+- **Validation**: Real-time URL validation with error messages.
+- **Loading State**: A spinner indicates when analysis is in progress.
+- **Toast Notifications**: Feedback for success or error scenarios.
+- **Graph Visualization**: Historical performance data visualized using D3.js.
+- **Tailwind CSS**: Modern, responsive styling.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation
 
-### `npm test`
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/performance-report.git
+   cd performance-report
+   ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-### `npm run build`
+3. Start the development server:
+   ```bash
+   npm start
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## API Integration
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The app integrates with the Google PageSpeed Insights API. Ensure you replace any API keys or backend details in the code as needed.
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Scripts
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- `npm start`: Runs the app in development mode.
+- `npm build`: Builds the app for production.
+- `npm test`: Runs tests using React Testing Library.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Project Structure
 
-## Learn More
+```plaintext
+performance-report/
+├── public/          # Public assets (e.g., favicon, index.html)
+├── src/
+│   ├── components/  # Reusable React components
+│   ├── pages/       # Page-specific components
+│   ├── utils/       # Utility functions (e.g., cookie helpers, validation)
+│   ├── App.js       # Main app component
+│   └── index.js     # Entry point
+├── package.json     # Project metadata and dependencies
+└── tailwind.config.js # Tailwind CSS configuration
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Dependencies
 
-### Code Splitting
+- **React**: Core UI framework.
+- **React Hook Form**: For form validation and handling.
+- **D3.js**: Visualization library for charts and graphs.
+- **React Toastify**: Toast notifications for user feedback.
+- **Tailwind CSS**: For styling.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## Contribution
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Contributions are welcome! Please fork the repository and submit a pull request for review.
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## License
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is licensed under the MIT License. See the LICENSE file for details.
