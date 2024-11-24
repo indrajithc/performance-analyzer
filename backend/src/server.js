@@ -13,6 +13,7 @@ const buildDir = process.env.BUILD_DIR || path.join(process.cwd(), "build");
 // Base directory to store the JSON files and logs
 const baseDir = path.join(process.cwd(), "data");
 const logDir = path.join(process.cwd(), "logs");
+const apiPrefix = "/api";
 
 // Ensure the base directories exist
 if (!fs.existsSync(baseDir)) {
@@ -60,18 +61,18 @@ function serveStaticFile(filePath) {
 
 // API to save JSON by key
 serve({
-  fetch(req) {
+  async fetch(req) {
     const url = new URL(req.url);
     const method = req.method;
 
     // Health check endpoint
-    if (url.pathname === "/health" && method === "POST") {
+    if (url.pathname === `/health` && method === "POST") {
       return new Response("OK", { status: 200 });
     }
 
     // Save API
-    if (url.pathname === "/save" && method === "POST") {
-      const { key, json } = req.json();
+    if (url.pathname === `${apiPrefix}/save` && method === "POST") {
+      const { key, json } = await req.json();
 
       if (!key || !json) {
         return new Response("Missing key or json data", { status: 400 });
@@ -81,7 +82,8 @@ serve({
 
       // Generate a unique ID for the new JSON entry
       const keyDir = path.join(baseDir, key);
-      const id = (fs.readdirSync(keyDir).length + 1).toString();
+      const id =
+        (fs.readdirSync(keyDir).length + 1).toString() + `_${Date.now()}`;
       const filePath = path.join(keyDir, `${id}.json`);
 
       // Save the JSON to a file
@@ -96,7 +98,7 @@ serve({
     }
 
     // Get all JSON by key
-    if (url.pathname.startsWith("/get/") && method === "GET") {
+    if (url.pathname.startsWith(`${apiPrefix}/get/`) && method === "GET") {
       const key = url.pathname.split("/get/")[1];
       const keyDir = path.join(baseDir, key);
 
@@ -114,8 +116,8 @@ serve({
     }
 
     // Get JSON by key and ID
-    if (url.pathname.startsWith("/getById/") && method === "GET") {
-      const [, , key, id] = url.pathname.split("/");
+    if (url.pathname.startsWith(`${apiPrefix}/getById/`) && method === "GET") {
+      const [, , , key, id] = url.pathname.split("/");
       const keyDir = path.join(baseDir, key);
 
       if (!fs.existsSync(keyDir)) {
