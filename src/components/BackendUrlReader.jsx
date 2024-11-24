@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import { useForm } from 'react-hook-form';
-
+import { useForm } from "react-hook-form";
+import { setCookie } from "../utils/CookieUtil";
+import { SERVER_URL } from "../utils/constants";
+import { toast } from "react-toastify";
 
 const BackendUrl = ({ isOpen, onClose, onSubmit }) => {
-  
-
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     mode: "onBlur",
   });
 
@@ -28,7 +32,7 @@ const BackendUrl = ({ isOpen, onClose, onSubmit }) => {
             <input
               type="text"
               placeholder="https://example.com"
-              {...register('url', {
+              {...register("url", {
                 required: "URL is required",
                 pattern: {
                   value: /^(ftp|http|https):\/\/[^ "]+$/,
@@ -37,12 +41,13 @@ const BackendUrl = ({ isOpen, onClose, onSubmit }) => {
               })}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {errors.url && <p className="text-red-500 text-sm">{errors.url.message}</p>}
+            {errors.url && (
+              <p className="text-red-500 text-sm">{errors.url.message}</p>
+            )}
           </div>
 
           {/* Modal Footer */}
           <div className="flex justify-end mt-6 space-x-3">
-             
             <button
               type="submit"
               className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none"
@@ -56,22 +61,29 @@ const BackendUrl = ({ isOpen, onClose, onSubmit }) => {
   );
 };
 
-const BackendUrlReader = () => {
+const BackendUrlReader = ({ onSetServerApi }) => {
   const [isModalOpen, setIsModalOpen] = useState(true);
 
   const handleSubmit = (url) => {
-    console.log("Submitted URL:", url);
-    setIsModalOpen(false);
+    try {
+      const uri = new URL(url);
+      setCookie(SERVER_URL, uri.origin);
+      setIsModalOpen(false);
+      toast.success("Success! URL has been set");
+      onSetServerApi(uri.origin);
+    } catch (error) {
+      console.error("Error setting URL:", error);
+    }
   };
 
   return (
     <>
-    <BackendUrl
-      isOpen={isModalOpen}
-      onClose={() => setIsModalOpen(false)}
-      onSubmit={handleSubmit}
+      <BackendUrl
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleSubmit}
       />
-      </>
+    </>
   );
 };
 export default BackendUrlReader;
