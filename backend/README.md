@@ -71,10 +71,10 @@ This is a simple API for storing, retrieving, and managing JSON files based on k
 ## Setup
 
 1. Clone the repository:
-   ```git clone https://github.com/yourusername/json-file-storage-api.git ```
+   ```git clone https://github.com/indrajithc/performance-analyzer/backend.git ```
 
 2. Navigate to the project directory:
-   ```cd json-file-storage-api``
+   ```cd performance-analyzer/backend``
 
 3. Install dependencies:
    ```npm install```

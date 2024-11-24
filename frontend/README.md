@@ -20,8 +20,8 @@ This React application provides a user-friendly interface to analyze and monitor
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/performance-report.git
-   cd performance-report
+   git clone https://github.com/indrajithc/performance-analyzer.git
+   cd performance-analyzer/frontend
    ```
 
 2. Install dependencies:
@@ -53,7 +53,7 @@ The app integrates with the Google PageSpeed Insights API. Ensure you replace an
 ## Project Structure
 
 ```plaintext
-performance-report/
+frontend/
 ├── public/          # Public assets (e.g., favicon, index.html)
 ├── src/
 │   ├── components/  # Reusable React components
